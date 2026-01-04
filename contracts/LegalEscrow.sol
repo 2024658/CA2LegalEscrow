@@ -19,4 +19,10 @@ contract LegalEscrow {
         amount = msg.value;
     }
 
+    // Solicitor confirms service completion
+    function confirmServiceCompletion() external {
+        require(msg.sender == solicitor, "Only solicitor can confirm");
+        serviceCompleted = true;
+    }
+    
 }
