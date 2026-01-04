@@ -24,5 +24,14 @@ contract LegalEscrow {
         require(msg.sender == solicitor, "Only solicitor can confirm");
         serviceCompleted = true;
     }
-    
+    // release payments
+    function releasePayment() external {
+    require(serviceCompleted, "Service not completed");
+    require(address(this).balance > 0, "No funds to release");
+
+    (bool success, ) = solicitor.call{value: address(this).balance}("");
+    require(success, "Payment transfer failed");
+}
+
+
 }
