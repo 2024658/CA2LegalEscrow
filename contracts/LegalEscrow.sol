@@ -32,6 +32,13 @@ contract LegalEscrow {
     (bool success, ) = solicitor.call{value: address(this).balance}("");
     require(success, "Payment transfer failed");
 }
+//refund client
+function refundClient() external {
+    require(msg.sender == client, "Only client can request refund");
+    require(!serviceCompleted, "Service already completed");
 
+    (bool success, ) = client.call{value: address(this).balance}("");
+    require(success, "Refund failed");
+}
 
 }
